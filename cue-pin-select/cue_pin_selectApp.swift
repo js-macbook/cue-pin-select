@@ -11,7 +11,7 @@ import SwiftUI
 struct cue_pin_selectApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CPSView(cps: CPSModel())
         }
     }
 }
