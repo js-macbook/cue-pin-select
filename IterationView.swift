@@ -45,59 +45,27 @@ struct IterationView: View {
     
     
     func scanningText(iteration: CPSModel.Iteration, cue: String) -> String {
-        let sentance: String
+        let nextParagraph: String
         let originalLetter = cue[iteration.id]
         
-        if iteration.foundLetter {
-            sentance = "Upon finding \(originalLetter.uppercased()), we take it along with the following two letters for our password."
-        } else {
-            sentance = "Since there are no \(originalLetter.uppercased())s in our phrase, we repeat the procedure with subsequent letters in the alphabet until we find one in our sentance. If we do this, we find \(String(iteration.searchedForLetter).uppercased()) at position \(iteration.matchingIndex) of our phrase and we will take it and the next two letters."
+        // Whether the original letter searched for was found or not.
+        switch iteration.foundLetter {
+        case true:
+            nextParagraph = "Upon finding \(originalLetter.uppercased()), we jump \(iteration.offset) \(iteration.offset != 1 ? "indices" : "index") to the right and record the next three letters for our password."
+        case false:
+            nextParagraph = "Since there are no \(originalLetter.uppercased())s in our phrase, we repeat the procedure with subsequent letters in the alphabet until we find one in our sentance. If we do this, we find \(String(iteration.searchedForLetter).uppercased()), jump right \(iteration.offset) \(iteration.offset != 1 ? "indices" : "index") to position \(iteration.matchingIndex) and take the next three letters for our password."
         }
         
-        if iteration.id == 0 {
-            return "To begin, we move \(iteration.offset) \(iteration.offset != 1 ? "indices" : "index") into the passphrase and start scanning for the letter \(originalLetter.uppercased()), wrapping if we reach the end of the phrase. \n\n \(sentance)"
-        } else if iteration.id == 1 {
-            return "Next, we move \(iteration.offset) \(iteration.offset != 1 ? "indices" : "index") to the right from our previous scan position and start to scan for the next letter, \(originalLetter.uppercased()). \n\n \(sentance)"
-        } else if iteration.id == 2 {
-            return "Next, we move \(iteration.offset) \(iteration.offset != 1 ? "indices" : "index") to the right from our previous scan position and start to scan for the third letter, \(originalLetter.uppercased()). \n\n \(sentance)"
-        } else {
-            return "Next, we move \(iteration.offset) \(iteration.offset != 1 ? "indices" : "index") to the right from our previous scan position and scan for the final letter, \(originalLetter.uppercased()). \n\n \(sentance)"
-        }
-    }
-    
-    
-    
-    
-    func chunkColor(int: Int) -> Color {
-        switch int {
+        // iteration.id is the index in cue and pin used for each algorithm iteration.
+        switch iteration.id {
         case 0:
-            return Color.blue
+            return "To begin, we scan the passphrase for the letter \(originalLetter.uppercased()), wrapping if we reach the end of the phrase. \n\n \(nextParagraph)"
         case 1:
-            return Color.pink
+            return "Starting from the end of the three letters we took, we scan for the next letter, \(originalLetter.uppercased()). \n\n \(nextParagraph)"
         case 2:
-            if #available(iOS 15.0, *) {
-                return Color.mint
-            } else {
-                return Color.green
-            }
-        case 3:
-            if #available(iOS 15.0, *) {
-                return Color.indigo
-            } else {
-                return Color.purple
-            }
+            return "Next, we scan for the third letter, \(originalLetter.uppercased()), in the same fashion. \n\n \(nextParagraph)"
         default:
-            if #available(iOS 15.0, *) {
-                return Color.brown
-            } else {
-                return Color.black
-            }
+            return "Finally, we scan for the last letter, \(originalLetter.uppercased()). \n\n \(nextParagraph)"
         }
     }
 }
-
-//struct IterationView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ResultView(cps: CPSModel())
-//    }
-//}

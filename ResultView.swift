@@ -10,38 +10,13 @@ import SwiftUI
 struct ResultView: View {
     @ObservedObject var cps: CPSModel
     @Environment(\.presentationMode) var presentationMode
-
     @State var resultStep = 0
     @State var copied = false
     
     var body: some View {
         let finalResult = password().reduce("") { $0 + $1.passwordChunk }
         VStack {
-            HStack {
-                Button(action: {
-                    withAnimation {
-                        self.resultStep -= self.resultStep > 0 ? 1 : 0
-                    }
-                }, label: {
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(self.resultStep > 0 ? .white : .clear)
-                })
-                    .padding()
-                Spacer()
-                Text(resultStep < 4 ? "Step \(resultStep + 1):" : "Result:")
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
-                Spacer()
-                Button(action: {
-                    withAnimation {
-                        self.resultStep += self.resultStep <= 3 ? 1 : 0
-                    }
-                }, label: {
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(self.resultStep <= 3 ? .white : .clear)
-                })
-                    .padding()
-            }
+            resultHeader
             .padding()
             .background(chunkColor(int: resultStep))
             if resultStep < 4 {
@@ -81,8 +56,40 @@ struct ResultView: View {
         }
     }
     
-    func foundLetterString(iteration: CPSModel.Iteration) -> String {
-        "hello"
+    var resultHeader: some View {
+        HStack {
+            leftButton
+                .padding()
+            Spacer()
+            Text(resultStep < 4 ? "Step \(resultStep + 1):" : "Result:")
+                .font(.largeTitle)
+                .foregroundColor(.white)
+            Spacer()
+            rightButton
+                .padding()
+        }
+    }
+    
+    var leftButton: some View {
+        Button(action: {
+            withAnimation {
+                self.resultStep -= self.resultStep > 0 ? 1 : 0
+            }
+        }, label: {
+            Image(systemName: "chevron.left")
+                .foregroundColor(self.resultStep > 0 ? .white : .clear)
+        })
+    }
+    
+    var rightButton: some View {
+        Button(action: {
+            withAnimation {
+                self.resultStep += self.resultStep <= 3 ? 1 : 0
+            }
+        }, label: {
+            Image(systemName: "chevron.right")
+                .foregroundColor(self.resultStep <= 3 ? .white : .clear)
+        })
     }
     
     func intToString(int: Int) -> String {
@@ -103,33 +110,6 @@ struct ResultView: View {
             cue: cps.getCue(),
             pin: cps.getPin()
         )
-    }
-    
-    func chunkColor(int: Int) -> Color {
-        switch int {
-        case 0:
-            return Color.blue
-        case 1:
-            return Color.pink
-        case 2:
-            if #available(iOS 15.0, *) {
-                return Color.mint
-            } else {
-                return Color.green
-            }
-        case 3:
-            if #available(iOS 15.0, *) {
-                return Color.indigo
-            } else {
-                return Color.purple
-            }
-        default:
-            if #available(iOS 15.0, *) {
-                return Color.brown
-            } else {
-                return Color.black
-            }
-        }
     }
 }
 
