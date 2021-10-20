@@ -10,7 +10,7 @@
 
 This is a swift implementation of the cue-pin-select algorithm from [the cue-pin-select paper](https://hal.archives-ouvertes.fr/hal-01781231/file/Cue_Pin_Select__a_Secure_and_Usable_Offline_Password_Scheme%20%286%29.pdf).
 
-The goal of the algorithm is for it to be easily human computable while still being unbreakable from a security standpoint. By being human computable, it allows people to store their passwords in memory rather than relying on digital password managers which can be a single point of failure.
+The goal of the algorithm is generate a secure password in such a way to be easily human computable while still being unbreakable from a security standpoint. By being human computable, it allows people to store their passwords in their memory rather than relying on digital password managers which can be a single point of failure.
 
 ## How to start
 
