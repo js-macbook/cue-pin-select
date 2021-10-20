@@ -3,7 +3,6 @@
 <div align="center">
     <img width="500" alt="Screen Shot 2021-10-20 at 12 34 04 PM" src="https://user-images.githubusercontent.com/89526807/138134216-83176a57-18e6-4727-ad05-1bdaf5f6fedf.png">
   <img width="200" src="https://user-images.githubusercontent.com/89526807/138133119-86473270-0817-4530-8c54-9f44289bf290.gif">
-  <img width="200" src="https://user-images.githubusercontent.com/89526807/138010246-b1ef6b05-27ef-44a7-9b52-a959ffde6c1c.gif">
 </div>
 
 ## About
